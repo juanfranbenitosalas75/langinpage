@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PronosPro - Pronósticos Deportivos con Análisis</title>
+<meta name="description" content="PronosPro: pronósticos deportivos gratuitos con análisis. Comunidad, picks con fundamento y acceso a Telegram. +18 Juega con responsabilidad.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2B4A; --navy-2: #0f1e3a;
+    --green: #00C853; --green-glow: rgba(0,200,83,.45);
+    --orange: #FF6B35; --light: #F5F7FA;
+    --text: #1F2937; --gray: #6B7280; --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', system-ui, sans-serif; color: var(--text); line-height: 1.6; background: #fff; overflow-x: hidden; }
+  a { color: var(--green); text-decoration: none; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+  section { position: relative; }
+
+  /* ---------- Header ---------- */
+  header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); background: rgba(26,43,74,.78); border-bottom: 1px solid rgba(255,255,255,.08); }
+  header .container { display: flex; justify-content: space-between; align-items: center; height: 72px; }
+  .logo { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900; color: #fff; letter-spacing: -1px; }
+  .logo span { color: var(--green); text-shadow: 0 0 20px var(--green-glow); }
+  nav a { color: rgba(255,255,255,.85); margin-left: 26px; font-weight: 500; font-size: 14px; transition: color .2s; }
+  nav a:hover { color: var(--green); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font-weight: 700; font-size: 14px; transition: transform .2s, box-shadow .2s, background .2s; border: none; cursor: pointer; }
+  .btn-primary { background: var(--green); color: #fff; box-shadow: 0 8px 24px var(--green-glow); }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 14px 36px var(--green-glow); }
+  .btn-ghost { background: rgba(255,255,255,.08); color: #fff; border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(8px); }
+  .btn-ghost:hover { background: rgba(255,255,255,.16); }
+  .btn-big { font-size: 17px; padding: 18px 38px; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; min-height: 100vh; display: flex; align-items: center; background: radial-gradient(ellipse at 20% 30%, #2a4a7f 0%, var(--navy-2) 60%, #0a1428 100%); color: #fff; overflow: hidden; padding-top: 72px; }
+  #particles { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero::before, .hero::after { content: ''; position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; pointer-events: none; animation: float 14s ease-in-out infinite; }
+  .hero::before { width: 560px; height: 560px; background: var(--green); top: -140px; left: -140px; }
+  .hero::after { width: 460px; height: 460px; background: var(--orange); bottom: -120px; right: -100px; animation-delay: -7s; }
+  @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(50px,-40px) scale(1.1); } }
+  .hero-grid { position: absolute; inset: 0; pointer-events: none; opacity: .1; background-image: linear-gradient(rgba(255,255,255,.7) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.7) 1px, transparent 1px); background-size: 70px 70px; mask-image: radial-gradient(ellipse at center, black 25%, transparent 75%); }
+  .hero .container { position: relative; z-index: 2; text-align: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(0,200,83,.12); border: 1px solid rgba(0,200,83,.4); padding: 9px 20px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--green); margin-bottom: 28px; backdrop-filter: blur(8px); animation: pulseBadge 2.5s ease-in-out infinite; }
+  @keyframes pulseBadge { 0%,100% { box-shadow: 0 0 0 0 rgba(0,200,83,.45); } 50% { box-shadow: 0 0 0 14px rgba(0,200,83,0); } }
+  .hero h1 { font-family: 'Montserrat', sans-serif; font-size: clamp(44px, 8vw, 96px); font-weight: 900; line-height: 1.0; letter-spacing: -2.5px; margin-bottom: 22px; }
+  .hero h1 .gradient-text { background: linear-gradient(120deg, var(--green), #6cff9e, var(--orange), var(--green)); background-size: 300% 300%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: gradientShift 7s ease infinite; }
+  @keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .hero p { font-size: clamp(16px, 2vw, 21px); max-width: 760px; margin: 0 auto 36px; opacity: .9; }
+  .hero .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .scroll-indicator { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); width: 26px; height: 42px; border: 2px solid rgba(255,255,255,.4); border-radius: 14px; }
+  .scroll-indicator::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 4px; height: 8px; background: var(--green); border-radius: 2px; animation: scrollDot 1.8s ease-in-out infinite; }
+  @keyframes scrollDot { 0% { transform: translate(-50%,0); opacity: 1; } 100% { transform: translate(-50%,18px); opacity: 0; } }
+
+  /* ---------- Reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(50px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-60px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal-left.in { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(60px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal-right.in { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 0; transform: scale(.9); transition: opacity .9s ease, transform .9s ease; }
+  .reveal-scale.in { opacity: 1; transform: scale(1); }
+
+  /* ---------- Marquee de resultados ---------- */
+  .marquee-section { background: var(--navy-2); color: #fff; padding: 18px 0; overflow: hidden; border-top: 1px solid rgba(0,200,83,.2); border-bottom: 1px solid rgba(0,200,83,.2); }
+  .marquee { display: flex; gap: 40px; animation: marquee 30s linear infinite; white-space: nowrap; }
+  .marquee-item { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+  .marquee-item .win { color: var(--green); font-weight: 800; }
+  .marquee-item .lose { color: #ff6b6b; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ---------- About ---------- */
+  .about { padding: 110px 0; background: var(--light); position: relative; overflow: hidden; }
+  .about::before { content: ''; position: absolute; top: -120px; right: -120px; width: 360px; height: 360px; background: radial-gradient(circle, rgba(0,200,83,.18), transparent 70%); border-radius: 50%; }
+  .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; align-items: center; }
+  .about-grid h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 4vw, 46px); color: var(--navy); margin-bottom: 18px; font-weight: 800; }
+  .about-grid p { color: var(--gray); margin-bottom: 14px; font-size: 17px; }
+  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 30px; }
+  .stat { background: #fff; padding: 24px 16px; border-radius: 16px; text-align: center; box-shadow: 0 10px 28px rgba(0,0,0,.07); border: 1px solid rgba(0,0,0,.04); transition: transform .3s, box-shadow .3s; }
+  .stat:hover { transform: translateY(-8px); box-shadow: 0 16px 36px rgba(0,0,0,.1); }
+  .stat .num { font-family: 'Montserrat', sans-serif; font-size: 34px; font-weight: 900; color: var(--green); }
+  .stat .lbl { font-size: 13px; color: var(--gray); margin-top: 4px; }
+  .about-visual { position: relative; aspect-ratio: 1; border-radius: 32px; background: linear-gradient(135deg, var(--navy), #2a4a7f); display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px rgba(26,43,74,.4); overflow: hidden; }
+  .about-visual .big { font-size: 150px; filter: drop-shadow(0 12px 24px rgba(0,0,0,.35)); animation: bounce 3s ease-in-out infinite; }
+  @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .about-visual .ring { position: absolute; inset: 24px; border: 2px dashed rgba(0,200,83,.4); border-radius: 50%; animation: spin 22s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ---------- Pick destacado ---------- */
+  .featured-pick { padding: 100px 0; background: linear-gradient(180deg, #fff, var(--light)); }
+  .pick-card {
+    max-width: 900px; margin: 0 auto; background: #fff; border-radius: 28px; overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,.12); border: 1px solid #e5e7eb;
+    display: grid; grid-template-columns: 1fr 1.3fr;
+  }
+  .pick-side { background: linear-gradient(135deg, var(--green), #00a843); color: #fff; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+  .pick-side .label { font-size: 12px; font-weight: 700; letter-spacing: 2px; opacity: .9; margin-bottom: 10px; }
+  .pick-side h3 { font-family: 'Montserrat', sans-serif; font-size: 30px; font-weight: 900; margin-bottom: 6px; }
+  .pick-side .match { font-size: 16px; opacity: .9; margin-bottom: 24px; }
+  .pick-side .conf { display: flex; gap: 4px; margin-bottom: 18px; }
+  .pick-side .conf span { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,.3); }
+  .pick-side .conf span.on { background: #fff; }
+  .pick-body { padding: 40px; }
+  .pick-body h4 { color: var(--navy); font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+  .pick-body p { color: var(--gray); font-size: 15px; margin-bottom: 14px; }
+  .pick-body .tag { display: inline-block; background: var(--light); color: var(--navy); padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; margin-right: 8px; margin-bottom: 8px; }
+  .pick-body .tag.green { background: rgba(0,200,83,.12); color: var(--green); }
+
+  /* ---------- Services ---------- */
+  .services { padding: 110px 0; }
+  .section-title { text-align: center; font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 4vw, 46px); font-weight: 800; color: var(--navy); margin-bottom: 14px; }
+  .section-sub { text-align: center; color: var(--gray); max-width: 680px; margin: 0 auto 60px; font-size: 17px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .card { position: relative; background: #fff; border: 1px solid #e5e7eb; border-radius: 22px; padding: 40px 30px; overflow: hidden; transition: transform .35s, box-shadow .35s; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--green), var(--orange)); transform: scaleX(0); transform-origin: left; transition: transform .45s; }
+  .card:hover { transform: translateY(-12px); box-shadow: 0 24px 48px rgba(0,0,0,.12); }
+  .card:hover::before { transform: scaleX(1); }
+  .card .icon { font-size: 50px; margin-bottom: 20px; display: inline-block; transition: transform .45s; }
+  .card:hover .icon { transform: scale(1.18) rotate(-8deg); }
+  .card h3 { color: var(--navy); font-size: 22px; margin-bottom: 10px; font-weight: 700; }
+  .card p { color: var(--gray); font-size: 15px; }
+
+  /* ---------- Steps ---------- */
+  .steps-section { padding: 110px 0; background: var(--light); position: relative; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 30px; position: relative; }
+  .steps::before { content: ''; position: absolute; top: 42px; left: 16%; right: 16%; height: 2px; background: linear-gradient(90deg, var(--green), var(--orange)); opacity: .35; }
+  .step { text-align: center; padding: 20px; position: relative; }
+  .step .num { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #00a843); color: #fff; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 28px; display: flex; align-items: center; justify-content: center; margin: 0 auto 22px; box-shadow: 0 12px 28px var(--green-glow); position: relative; z-index: 2; transition: transform .3s; }
+  .step:hover .num { transform: scale(1.12) rotate(8deg); }
+  .step h3 { color: var(--navy); margin-bottom: 8px; font-size: 20px; font-weight: 700; }
+  .step p { color: var(--gray); font-size: 15px; }
+
+  /* ---------- Testimonios ---------- */
+  .testimonials { padding: 110px 0; }
+  .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .test-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 30px; position: relative; transition: transform .3s; }
+  .test-card:hover { transform: translateY(-8px); }
+  .test-card .quote { font-size: 46px; color: var(--green); line-height: 1; margin-bottom: 8px; }
+  .test-card p { color: var(--gray); font-size: 15px; margin-bottom: 18px; font-style: italic; }
+  .test-card .author { display: flex; align-items: center; gap: 12px; }
+  .test-card .avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--green)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; }
+  .test-card .name { font-weight: 700; color: var(--navy); font-size: 14px; }
+  .test-card .role { font-size: 12px; color: var(--gray); }
+
+  /* ---------- CTA ---------- */
+  .cta { position: relative; padding: 120px 0; text-align: center; color: #fff; overflow: hidden; background: radial-gradient(ellipse at 50% 0%, #2a4a7f, var(--navy-2) 70%); }
+  .cta::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 120%, rgba(0,200,83,.3), transparent 60%); }
+  .cta h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(32px, 4.5vw, 50px); font-weight: 800; margin-bottom: 16px; position: relative; }
+  .cta p { opacity: .9; max-width: 640px; margin: 0 auto 32px; font-size: 18px; position: relative; }
+
+  /* ---------- FAQ ---------- */
+  .faq { padding: 110px 0; background: var(--light); }
+  .faq-list { max-width: 860px; margin: 0 auto; }
+  .faq-item { background: #fff; border-radius: 16px; padding: 22px 28px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(0,0,0,.05); border: 1px solid #e5e7eb; transition: transform .2s, box-shadow .2s; cursor: pointer; }
+  .faq-item:hover { transform: translateX(8px); box-shadow: 0 8px 22px rgba(0,0,0,.08); }
+  .faq-item h3 { color: var(--navy); font-size: 17px; margin-bottom: 6px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .faq-item h3::after { content: '+'; color: var(--green); font-size: 24px; font-weight: 900; transition: transform .35s; }
+  .faq-item.open h3::after { transform: rotate(45deg); }
+  .faq-item p { color: var(--gray); font-size: 15px; max-height: 0; overflow: hidden; transition: max-height .4s ease, margin .4s; }
+  .faq-item.open p { max-height: 220px; margin-top: 10px; }
+
+  /* ---------- Footer ---------- */
+  footer { background: #0a1428; color: #9ca3af; padding: 60px 0 20px; font-size: 14px; }
+  footer .container { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; }
+  footer h4 { color: #fff; margin-bottom: 14px; font-size: 15px; font-weight: 700; }
+  footer a { color: #9ca3af; display: block; margin-bottom: 8px; transition: color .2s, transform .2s; }
+  footer a:hover { color: var(--green); transform: translateX(4px); }
+  .disclaimer { border-top: 1px solid #1f2937; margin-top: 34px; padding-top: 20px; font-size: 12px; color: #6b7280; text-align: center; line-height: 1.7; }
+
+  /* ---------- Sticky CTA (mobile) ---------- */
+  .sticky-cta { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 900; display: none; }
+  .sticky-cta .btn { box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+  @media (max-width: 768px) {
+    .sticky-cta { display: block; }
+    .hero h1 { font-size: 42px; }
+    .about-grid, .services-grid, .test-grid, .steps, .pick-card { grid-template-columns: 1fr; }
+    footer .container { grid-template-columns: 1fr; }
+    nav { display: none; }
+    .steps::before { display: none; }
+    .pick-side { padding: 28px; }
+    .pick-body { padding: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="logo">Pronos<span>Pro</span></div>
+    <nav>
+      <a href="#about">Sobre nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#pick">Pick del día</a>
+      <a href="#faq">FAQ</a>
+      <a href="#registro" class="btn btn-primary" style="padding:8px 18px;">Únete</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="particles"></canvas>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <span class="hero-badge">⚽ Pronósticos deportivos con análisis</span>
+    <h1>Pronósticos con <span class="gradient-text">criterio</span>,<br>no con suerte</h1>
+    <p>En PronosPro analizamos cada partido con datos reales: forma, bajas, cuotas y valor. Recibe picks gratuitos en nuestro canal de Telegram y únete a la comunidad.</p>
+    <div class="btns">
+      <a href="https://t.me/+bEJG2WVKc7A2M2Q0" class="btn btn-primary btn-big" target="_blank" rel="noopener">Únete al canal de Telegram →</a>
+      <a href="#pick" class="btn btn-ghost btn-big">Ver pick del día</a>
+    </div>
+  </div>
+  <div class="scroll-indicator"></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee">
+    <span class="marquee-item">⚽ Real Madrid vs Barcelona <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Atlético vs Sevilla <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Man City vs Arsenal <span class="lose">PERDIDO</span></span>
+    <span class="marquee-item">⚽ PSG vs Marseille <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Bayern vs Dortmund <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Inter vs Milan <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Liverpool vs Chelsea <span class="lose">PERDIDO</span></span>
+    <span class="marquee-item">⚽ Real Madrid vs Barcelona <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Atlético vs Sevilla <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Man City vs Arsenal <span class="lose">PERDIDO</span></span>
+    <span class="marquee-item">⚽ PSG vs Marseille <span class="win">GANADO</span></span>
+    <span class="marquee-item">⚽ Bayern vs Dortmund <span class="win">GANADO</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="reveal-left">
+        <h2>¿Qué es PronosPro?</h2>
+        <p>PronosPro es una comunidad de análisis deportivo donde compartimos pronósticos gratuitos con fundamento. No vendemos humo: cada pick viene con su razonamiento, datos y nivel de confianza.</p>
+        <p>Nuestro objetivo es aportar valor real a los usuarios, generar confianza y fidelizar a una comunidad que quiere apostar con criterio.</p>
+        <div class="stats">
+          <div class="stat"><div class="num" data-target="127">0</div><div class="lbl">Picks analizados</div></div>
+          <div class="stat"><div class="num" data-target="100">0</div><div class="lbl">% Gratuito</div></div>
+          <div class="stat"><div class="num" data-target="24">0</div><div class="lbl">Comunidad activa</div></div>
+        </div>
+      </div>
+      <div class="about-visual reveal-right">
+        <div class="ring"></div>
+        <div class="big">⚽</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PICK DESTACADO -->
+<section id="pick" class="featured-pick">
+  <div class="container">
+    <h2 class="section-title reveal">Pick del día</h2>
+    <p class="section-sub reveal">Análisis diario de LaLiga. Gratis, con fundamento.</p>
+    <div class="pick-card reveal-scale">
+      <div class="pick-side">
+        <div class="label">PICK DEL DÍA</div>
+        <h3>Pick diario de LaLiga</h3>
+        <div class="match">LaLiga · Análisis diario</div>
+        <div class="conf">
+          <span class="on"></span><span class="on"></span><span class="on"></span><span class="on"></span><span></span>
+        </div>
+        <div style="font-size:13px; opacity:.85;">Confianza media: 4/5 · Cuota media: 1.80+</div>
+      </div>
+      <div class="pick-body">
+        <h4>Análisis con fundamento, cada día</h4>
+        <p>Cada jornada analizamos un partido de LaLiga con datos reales: forma reciente, bajas, cuotas y valor. El pick completo con razonamiento y nivel de confianza se publica en nuestro canal de Telegram.</p>
+        <span class="tag green">Forma y bajas</span>
+        <span class="tag">Cuotas con valor</span>
+        <span class="tag">Confianza 1-5</span>
+        <div style="margin-top:18px;">
+          <a href="https://t.me/+bEJG2WVKc7A2M2Q0" class="btn btn-primary" target="_blank" rel="noopener">Ver pick de hoy en Telegram →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" class="services">
+  <div class="container">
+    <h2 class="section-title reveal">Servicios</h2>
+    <p class="section-sub reveal">Todo lo que ofrecemos, sin coste para ti.</p>
+    <div class="services-grid">
+      <div class="card reveal">
+        <div class="icon">📊</div>
+        <h3>Pronósticos gratuitos</h3>
+        <p>Picks diarios con análisis de forma, bajas, cuotas y nivel de confianza. Sin coste.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">💬</div>
+        <h3>Comunidad en Telegram</h3>
+        <p>Canal activo con picks, resultados y debate. Resuelve tus dudas en tiempo real.</p>
+      </div>
+      <div class="card reveal">
+        <div class="icon">🎓</div>
+        <h3>Educación</h3>
+        <p>Aprende a leer cuotas, identificar valor y gestionar tu bankroll con criterio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section">
+  <div class="container">
+    <h2 class="section-title reveal">Cómo funciona</h2>
+    <p class="section-sub reveal">Tres pasos para empezar.</p>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="num">1</div>
+        <h3>Síguenos</h3>
+        <p>Únete a nuestras redes y al canal de Telegram de PronosPro.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">2</div>
+        <h3>Recibe picks</h3>
+        <p>Cada día compartimos un pick con fundamento y nivel de confianza.</p>
+      </div>
+      <div class="step reveal">
+        <div class="num">3</div>
+        <h3>Aprende y gana</h3>
+        <p>Aplica el análisis con criterio y gestiona tu bankroll con responsabilidad.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="testimonials">
+  <div class="container">
+    <h2 class="section-title reveal">Lo que dice la comunidad</h2>
+    <p class="section-sub reveal">Opiniones reales de nuestra comunidad.</p>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="quote">"</div>
+        <p>Por fin un canal que explica el porqué de cada pick. Se nota el trabajo de análisis.</p>
+        <div class="author">
+          <div class="avatar">J</div>
+          <div><div class="name">Juan M.</div><div class="role">Miembro desde 2025</div></div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="quote">"</div>
+        <p>Los carruseles de Instagram son súper claros. Aprendo algo nuevo cada día.</p>
+        <div class="author">
+          <div class="avatar">A</div>
+          <div><div class="name">Ana R.</div><div class="role">Miembro desde 2025</div></div>
+        </div>
+      </div>
+      <div class="test-card reveal">
+        <div class="quote">"</div>
+        <p>Comunidad honesta, sin humo. Los resultados se publican tal cual, ganen o pierdan.</p>
+        <div class="author">
+          <div class="avatar">C</div>
+          <div><div class="name">Carlos T.</div><div class="role">Miembro desde 2026</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="container">
+    <h2 class="section-title reveal">Preguntas frecuentes</h2>
+    <p class="section-sub reveal">Resolvemos tus dudas.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>¿Los pronósticos son gratuitos?</h3>
+        <p>Sí, todo el contenido de PronosPro es gratuito. Queremos aportar valor y generar confianza.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Garantizáis ganancias?</h3>
+        <p>No. Los pronósticos no garantizan resultados. El juego conlleva riesgo. Juega con responsabilidad.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Cómo me uno al canal?</h3>
+        <p>Haz clic en "Únete al canal de Telegram" y sigue las instrucciones. Es gratis.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Ofrecéis algún servicio de pago?</h3>
+        <p>No por ahora. Todo el contenido es gratuito. En el futuro podríamos añadir servicios premium.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="registro" class="cta">
+  <div class="container">
+    <h2 class="reveal">¿Listo para apostar con criterio?</h2>
+    <p class="reveal">Únete a PronosPro y recibe picks gratuitos con análisis. Comunidad, transparencia y juego responsable.</p>
+    <a href="https://t.me/+bEJG2WVKc7A2M2Q0" class="btn btn-primary btn-big reveal" target="_blank" rel="noopener">Únete al canal de Telegram →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div>
+      <h4>PronosPro</h4>
+      <p>Pronósticos deportivos con análisis. Comunidad, transparencia y juego responsable.</p>
+    </div>
+    <div>
+      <h4>Enlaces</h4>
+      <a href="#about">Sobre nosotros</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#pick">Pick del día</a>
+      <a href="#faq">FAQ</a>
+      <a href="#registro">Únete</a>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <a href="#">Política de privacidad</a>
+      <a href="#">Términos y condiciones</a>
+      <a href="#">Juego responsable</a>
+    </div>
+  </div>
+  <div class="disclaimer">
+    +18 | Juega con responsabilidad. Los pronósticos deportivos no garantizan resultados. PronosPro no es una casa de apuestas ni ofrece servicios de juego. Si tienes problemas con el juego, busca ayuda profesional.
+  </div>
+</footer>
+
+<!-- STICKY CTA MOBILE -->
+<div class="sticky-cta">
+  <a href="https://t.me/+bEJG2WVKc7A2M2Q0" class="btn btn-primary" target="_blank" rel="noopener">Únete a Telegram →</a>
+</div>
+
+<script>
+  // Particles
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for (let i = 0; i < 70; i++) {
+    particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*2+0.5, vx: (Math.random()-.5)*.4, vy: (Math.random()-.5)*.4, a: Math.random()*.6+.2 });
+  }
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(0,200,83,${p.a})`; ctx.fill();
+    });
+    // lines between close particles
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i+1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+        const d = Math.hypot(dx,dy);
+        if (d < 120) {
+          ctx.strokeStyle = `rgba(0,200,83,${.15*(1-d/120)})`;
+          ctx.lineWidth = 1; ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => io.observe(el));
+
+  // Animated counters
+  const counters = document.querySelectorAll('.num[data-target]');
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target; const target = +el.dataset.target; let cur = 0;
+        const step = Math.max(1, Math.ceil(target/60));
+        const t = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(t); } el.textContent = cur + (target===100?'%':''); }, 25);
+        cio.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => cio.observe(c));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => item.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>
+EOF

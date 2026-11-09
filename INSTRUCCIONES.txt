@@ -1,0 +1,49 @@
+INSTRUCCIONES - Servidor web PronosPro (local)
+============================================
+
+1) REQUISITOS
+   - Python instalado (ya lo tienes: C:\Users\admin\.local\bin\python3.14.exe)
+   - Carpeta de la web: C:\Users\admin\Desktop\aaa\landing
+
+2) ARRANCAR EL SERVIDOR (acceso local)
+   a) Doble clic en start_server.bat  (o ejecuta en consola: python -m http.server 8080)
+   b) Abre el navegador en: http://localhost:8080
+   c) La web solo estara disponible mientras el ordenador este encendido y el servidor corriendo.
+
+3) ACCESO DESDE OTROS DISPOSITIVOS EN TU RED (LAN)
+   a) Averigua tu IP local: en consola ejecuta "ipconfig" y busca "Direccion IPv4" (ej. 192.168.1.50).
+   b) Desde otro dispositivo en la misma red abre: http://TU_IP:8080
+   c) Si Windows Firewall bloquea, permite Python en redes privadas.
+
+4) ACCESO DESDE INTERNET (cuando el ordenador este encendido)
+   Opcion A - Cloudflare Tunnel (gratis, recomendado, sin abrir puertos):
+     1. Descarga cloudflared: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/downloads/
+     2. Ejecuta: cloudflared tunnel --url http://localhost:8080
+     3. Te dara una URL publica (ej. https://xxx.trycloudflare.com) que podras compartir.
+     4. Manten cloudflared corriendo junto al servidor.
+
+   Opcion B - ngrok (gratis con registro):
+     1. Descarga ngrok: https://ngrok.com/download
+     2. Ejecuta: ngrok http 8080
+     3. Comparte la URL publica que aparece.
+
+   Opcion C - Port forwarding en el router (avanzado):
+     1. Reserva IP local para tu PC en el router.
+     2. Abre el puerto 8080 (TCP) hacia esa IP.
+     3. Usa tu IP publica (whatismyip.com) + :8080.
+     Nota: tu IP publica puede cambiar; considera un servicio DDNS.
+
+5) INICIO AUTOMATICO AL ENCENDER EL PC (opcional)
+   - Presiona Win+R, escribe "shell:startup" y pulsa Enter.
+   - Copia un acceso directo a start_server.bat en esa carpeta.
+   - (Opcional) Añade tambien el comando de cloudflared/ngrok si quieres acceso externo automatico.
+
+6) RECOMENDACIONES
+   - Para produccion real, considera un hosting (Vercel, Netlify, GitHub Pages) para que la web este siempre disponible sin depender de tu PC.
+   - Manten los disclaimers +18 visibles (ya incluidos en el footer).
+   - Actualiza los enlaces de Telegram (https://t.me/TU_CANAL) en index.html.
+
+Archivos:
+   - index.html : pagina web PronosPro
+   - start_server.bat : arranca el servidor local
+EOF
